@@ -1,0 +1,100 @@
+#include <iostream>
+#include <string>
+#include <cctype>  // 用于字符处理函数
+
+using namespace std;
+
+// 函数声明
+char toUpperCase(char c);
+char toLowerCase(char c);
+string convertString(const string& str, bool toUpper);
+void displayMenu();
+
+int main() {
+    string input;
+    int choice;
+    
+    cout << "=== 字母大小写转换器 ===" << endl;
+    
+    while (true) {
+        displayMenu();
+        cout << "请选择操作 (1-4): ";
+        cin >> choice;
+        cin.ignore(); // 清除输入缓冲区
+        
+        switch (choice) {
+            case 1: // 转换为大写
+                cout << "请输入要转换的文本: ";
+                getline(cin, input);
+                cout << "转换结果: " << convertString(input, true) << endl;
+                break;
+                
+            case 2: // 转换为小写
+                cout << "请输入要转换的文本: ";
+                getline(cin, input);
+                cout << "转换结果: " << convertString(input, false) << endl;
+                break;
+                
+            case 3: { // 单个字符转换
+                char ch;
+                cout << "请输入一个字符: ";
+                cin >> ch;
+                cout << "原始字符: " << ch << endl;
+                cout << "大写形式: " << toUpperCase(ch) << endl;
+                cout << "小写形式: " << toLowerCase(ch) << endl;
+                cin.ignore(); // 清除输入缓冲区
+                break;
+            }
+                
+            case 4: // 退出
+                cout << "感谢使用！再见！" << endl;
+                return 0;
+                
+            default:
+                cout << "无效选择，请重新输入！" << endl;
+        }
+        
+        cout << endl << "------------------------" << endl;
+    }
+    
+    return 0;
+}
+
+// 转换为大写
+char toUpperCase(char c) {
+    if (c >= 'a' && c <= 'z') {
+        return c - 32; // ASCII码差值
+    }
+    return c;
+}
+
+// 转换为小写
+char toLowerCase(char c) {
+    if (c >= 'A' && c <= 'Z') {
+        return c + 32; // ASCII码差值
+    }
+    return c;
+}
+
+// 转换整个字符串
+string convertString(const string& str, bool toUpper) {
+    string result = str;
+    
+    for (char& c : result) {
+        if (toUpper) {
+            c = toUpperCase(c);
+        } else {
+            c = toLowerCase(c);
+        }
+    }
+    
+    return result;
+}
+
+// 显示菜单
+void displayMenu() {
+    cout << "\n1. 转换为大写" << endl;
+    cout << "2. 转换为小写" << endl;
+    cout << "3. 单个字符转换" << endl;
+    cout << "4. 退出程序" << endl;
+}
